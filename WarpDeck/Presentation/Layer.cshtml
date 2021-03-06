@@ -1,0 +1,54 @@
+@page
+@using Autofac
+@using WarpDeck
+@using WarpDeck.Domain
+@using WarpDeck.Domain.Model
+@using WarpDeck.Presentation.Shared
+@model WarpDeck.Presentation.Layer
+
+@{
+    Layout = "/Presentation/Shared/_Layout.cshtml";
+}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Layers</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid m-0 p-0">
+    <div class="row">
+        <div class="col-md-9">
+            @await Html.PartialAsync("/Presentation/Shared/_KeymapGrid.cshtml", new KeymapGridPartialModel
+            {
+                Columns = 8,
+                Rows = 4,
+                Keys = Program.Container.Resolve<DeviceManager>().Devices.Values.First().Layers.ItemLookup.Values.First().Keys
+            })
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+              <div class="card-header">
+                Layers
+              </div>
+              <div class="card-body">
+               
+                  <form class="form">
+                      @foreach (LayerModel layer in Model.Layers)
+                      {
+                          <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                              <label class="form-check-label" for="defaultCheck1">
+                                  @layer.LayerId
+                              </label>
+                          </div>    
+                      }
+                      
+                  </form>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

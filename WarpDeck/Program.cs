@@ -1,63 +1,96 @@
 ﻿using System;
-using WindowsInput.Events;
+using System.Collections.Generic;
+using System.Linq;
+using Autofac;
 using OpenMacroBoard.SDK;
 using StreamDeckSharp;
-using WarpDeck.Action;
-using WarpDeck.Configuration;
-using WarpDeck.Key.Behavior;
-using WarpDeck.Layers;
+using WarpDeck.Application.Rules;
+using WarpDeck.Domain;
+using WarpDeck.Domain.Model;
+using WarpDeck.Domain.Model.Collections; //<-- Here it is
 
 
 namespace WarpDeck
 {
-    class Program
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public class Program
     {
-        static Device _warpDevice = new Device();
+      
+        public static IContainer Container;
 
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            KeyLayer layer = new KeyLayer()
-                .Key(0, "Volume Down", Behaviors.SinglePress(MultimediaActions.VolumeDown))
-                .Key(1, "Play/Pause", Behaviors.SinglePress(MultimediaActions.PlayPause))
-                .Key(2, "Volume Up", Behaviors.SinglePress(MultimediaActions.VolumeUp))
-                .Key(3, "Swap Display",
-                    Behaviors.SinglePress(Actions.WindowsInput(builder =>
-                        builder.ClickChord(KeyCode.LWin, KeyCode.Shift, KeyCode.Left))))
-                .Key(4, "Minimize",
-                    Behaviors.SinglePress(Actions.WindowsInput(builder =>
-                        builder.ClickChord(KeyCode.LAlt, KeyCode.Space).Click(KeyCode.N))))
-                .Key(5, "Notepad",
-                    Behaviors.SinglePress(Actions.WindowsInput(builder =>
-                        builder.ClickChord(KeyCode.LWin, KeyCode.Shift, KeyCode.Left))));
+            ContainerBuilder builder = new ContainerBuilder();
+            builder.RegisterModule<Dependencies.IconsModule>();
+            builder.RegisterModule<Dependencies.BehaviorsModule>();
+            builder.RegisterModule<Dependencies.ActionsModule>();
+            builder.RegisterModule<Dependencies.PresentationModule>();
+            builder.RegisterModule<Dependencies.RulesModule>();
+            
+            using var streamdeck = StreamDeck.OpenDevice();
+           
+            builder.RegisterInstance(streamdeck).As<IMacroBoard>();
+            builder.RegisterInstance(new DeviceManager().AddDevice(streamdeck, SetDevelopmentDevice())).AsSelf();
+            Container = builder.Build();
+            
+            SetDevelopmentRules();
+            Presentation.Presentation.StartAsync(args);
 
-            _warpDevice = new Device();
-            _warpDevice.Layers.Add(layer);
-
-            using var deck = StreamDeck.OpenDevice();
-            deck.KeyStateChanged += (sender, e) => _warpDevice.HandleExternalKeyChange(e.Key, e.IsDown);
-
-            new LayerConfigWriter().WriteLayerConfig("multi.wdlayer.json", layer);
-
-            RefreshBoard(deck, _warpDevice);
+            
+            Container.Resolve<DeviceManager>().RefreshBoard("office-streamdeck");
+            Console.WriteLine("// --warp-deck- //");
             Console.ReadKey();
         }
 
-
-        static void RefreshBoard(IStreamDeckBoard board, Device device)
+        private static void SetDevelopmentRules()
         {
-            foreach (KeyLayer layer in device.Layers)
-                DrawLayerOnBoard(board, layer);
+            Container.Resolve<DeviceManager>().Rules.AddRules(
+                TagRules.Always("text", ""),
+                TagRules.Always("text.top", "10"),
+                TagRules.Always("text.left", "10"),
+                TagRules.Always("svg.scale.width", ".5"),
+                TagRules.Always("svg.scale.height", ".5"),
+                TagRules.Always("svg.position.top", "40"),
+                TagRules.Always("svg.position.left", "36"),
+                TagRules.Always("svg.baseDirectory", "C:/Users/andrewm/Desktop/fa-pro-5.15.2/regular/"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Multimedia", "#370f69"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Window", "#0f3369"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Apps", "#FF33A8"));
         }
 
-        private static void DrawLayerOnBoard(IStreamDeckBoard board, KeyLayer layer)
+        private static DeviceModel SetDevelopmentDevice()
         {
-            foreach (var layerKey in layer.MappedKeys.Keys)
+            return new DeviceModel
             {
-                _warpDevice.KeyState.UpdateKeyState(layerKey.Key, layerKey.Value);
-                board.SetKeyBitmap(layerKey.Key,
-                    KeyBitmap.Create.FromBitmap(_warpDevice.GenerateKeyIcon(layerKey.Key)));
-            }
+                DeviceId = "office-streamdeck",
+                Layers = new LayerMap(new[]
+                {
+                    new LayerModel
+                    {
+                        LayerId = "windows-media",
+                        Keys = new KeyMap(
+                            new Dictionary<int, KeyModel>
+                            {
+                                {
+                                    0, new KeyModel
+                                    {
+                                        KeyId = 0,
+                                        Behavior = new BehaviorModel
+                                        {
+                                            Type = "SinglePressBehavior", BehaviorId = "SinglePressBehavior",
+                                            Provider = "warpdeck"
+                                        },
+                                        Tags = new TagMap("key.category = Window", "svg.path = volume-down.svg")
+                                    }
+                                }
+                            })
+                    }
+                })
+            };
         }
+
+
+        
     }
 }

@@ -1,0 +1,16 @@
+@model WarpDeck.Presentation.Shared.KeymapGridPartialModel
+
+<div class="container-fluid">
+    @for (int row = 0; row < Model.Rows; row++)
+    {
+        <div class="row">
+            @for (int col = 0; col < Model.Columns; col++)
+            {
+                <div class="col m-0 p-0" >
+                    @{ int keyIndex = col + row * Model.Columns; }
+                    <img class="img-fluid" src="/api/render/live/icon/@keyIndex" alt="Key @keyIndex"/>
+                </div>
+            }
+        </div>
+    }
+</div>
