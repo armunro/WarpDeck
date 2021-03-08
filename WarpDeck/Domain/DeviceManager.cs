@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Autofac;
@@ -27,7 +26,7 @@ namespace WarpDeck.Domain
             Boards.Add(device.DeviceId, board);
             KeyStates.Add(device.DeviceId, new KeyMap());
             Rules = new RuleManager();
-            
+
             return this;
         }
 
@@ -37,14 +36,13 @@ namespace WarpDeck.Domain
 
             string behaviorTypeName = KeyStates[deviceId].Keys[keyId].Behavior.Type;
             KeyBehavior behavior = Program.Container.ResolveNamed<KeyBehavior>(behaviorTypeName);
-            behavior.KeyStateChanged(DateTime.Now, isDown ? KeyState.Down : KeyState.Up);
-            
+            behavior.KeyStateChanged(KeyStates[deviceId].Keys[keyId].Behavior, isDown ? KeyState.Down : KeyState.Up);
         }
 
         public void RefreshBoard(string deviceId)
         {
             DeviceModel device = Devices[deviceId];
-            
+
 
             foreach (LayerModel layer in device.Layers.GetAllLayers())
                 DrawLayerOnBoard(layer, deviceId);

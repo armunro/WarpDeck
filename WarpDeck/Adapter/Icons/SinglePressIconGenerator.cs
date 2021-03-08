@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using WarpDeck.Application;
 using WarpDeck.Application.Rules;

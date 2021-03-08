@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using WarpDeck.Domain;
+using WarpDeck.Domain.Model;
 
 namespace WarpDeck.Adapter.Actions.LocalSystem
 {
@@ -13,7 +14,7 @@ namespace WarpDeck.Adapter.Actions.LocalSystem
             _executablePath = executablePath;
             _arguments = arguments;
         }
-        public override void ExecuteAction()
+        public override void StartAction(ActionModel actionModel)
         {
             ProcessStartInfo process = new ProcessStartInfo(_executablePath, _arguments);
             Process.Start(process);

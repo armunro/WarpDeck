@@ -2,6 +2,7 @@ using System;
 using WindowsInput;
 using WindowsInput.Events;
 using WarpDeck.Domain;
+using WarpDeck.Domain.Model;
 
 namespace WarpDeck.Adapter.Actions
 {
@@ -12,12 +13,11 @@ namespace WarpDeck.Adapter.Actions
         public WindowInputKeyAction(Func<EventBuilder, EventBuilder> act)
         {
             _act = act;
-            
         }
-        public override void ExecuteAction()
+
+        public override void StartAction(ActionModel actionModel)
         {
             EventBuilder builder = _act(Simulate.Events());
-
             builder.Invoke();
         }
     }

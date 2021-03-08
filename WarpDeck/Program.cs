@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Autofac;
 using OpenMacroBoard.SDK;
 using StreamDeckSharp;
+using WarpDeck.Adapter.Actions;
 using WarpDeck.Application.Rules;
 using WarpDeck.Domain;
 using WarpDeck.Domain.Model;
@@ -15,7 +15,6 @@ namespace WarpDeck
     // ReSharper disable once ClassNeverInstantiated.Global
     public class Program
     {
-      
         public static IContainer Container;
 
 
@@ -27,18 +26,17 @@ namespace WarpDeck
             builder.RegisterModule<Dependencies.ActionsModule>();
             builder.RegisterModule<Dependencies.PresentationModule>();
             builder.RegisterModule<Dependencies.RulesModule>();
-            
+
             using var streamdeck = StreamDeck.OpenDevice();
-           
-            builder.RegisterInstance(streamdeck).As<IMacroBoard>();
+
+          
             builder.RegisterInstance(new DeviceManager().AddDevice(streamdeck, SetDevelopmentDevice())).AsSelf();
             Container = builder.Build();
-            
+
             SetDevelopmentRules();
             Presentation.Presentation.StartAsync(args);
-
-            
             Container.Resolve<DeviceManager>().RefreshBoard("office-streamdeck");
+
             Console.WriteLine("// --warp-deck- //");
             Console.ReadKey();
         }
@@ -79,7 +77,11 @@ namespace WarpDeck
                                         Behavior = new BehaviorModel
                                         {
                                             Type = "SinglePressBehavior", BehaviorId = "SinglePressBehavior",
-                                            Provider = "warpdeck"
+                                            Provider = "warpdeck",
+                                            Actions = new Dictionary<string, ActionModel>()
+                                            {
+                                                {"press", new ActionModel() {Type = nameof(WindowInputKeyAction)}}
+                                            }
                                         },
                                         Tags = new TagMap("key.category = Window", "svg.path = volume-down.svg")
                                     }
@@ -89,8 +91,5 @@ namespace WarpDeck
                 })
             };
         }
-
-
-        
     }
 }

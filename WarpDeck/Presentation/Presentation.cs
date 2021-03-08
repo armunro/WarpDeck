@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Autofac;
 using Autofac.Extensions.DependencyInjection;
 
 namespace WarpDeck.Presentation
