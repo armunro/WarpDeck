@@ -35,7 +35,7 @@ namespace WarpDeck.Presentation.Controllers
         public DeviceResponseModel DeviceById(string deviceId)
         {
             DeviceResponseModel summaryModel = CreateSummaryModel(Program.Container.Resolve<DeviceManager>().Devices.Values.First());
-            summaryModel.Layers = CreateLayerSummaryModels(Program.Container.Resolve<DeviceManager>().Devices.Values.First().Layers.GetAllLayers(), deviceId);
+            summaryModel.Layers = CreateLayerSummaryModels(Program.Container.Resolve<DeviceManager>().Devices.Values.First().Layers.Values, deviceId);
             return summaryModel;
         }
 
@@ -44,7 +44,7 @@ namespace WarpDeck.Presentation.Controllers
         public DeviceResponseModel DeviceLayersByDeviceId(string deviceId)
         {
             DeviceResponseModel summaryModel = CreateSummaryModel(Program.Container.Resolve<DeviceManager>().Devices.Values.First());
-            summaryModel.Layers = CreateLayerSummaryModels(Program.Container.Resolve<DeviceManager>().Devices.Values.First().Layers.GetAllLayers(), deviceId);
+            summaryModel.Layers = CreateLayerSummaryModels(Program.Container.Resolve<DeviceManager>().Devices.Values.First().Layers.Values, deviceId);
             return summaryModel;
         }
 
@@ -62,7 +62,7 @@ namespace WarpDeck.Presentation.Controllers
 
         private static KeyResponseModel[] CreateKeySummaryModels(string deviceId, string layerId, KeyMap keys)
         {
-            return keys.Keys.Select(x => new KeyResponseModel
+            return keys.Select(x => new KeyResponseModel
             {
                 Uri = $"/device/{deviceId}/layer/{layerId}/key/{x.Value.KeyId}",
                 IconUri = $"/render/layer/{layerId}/icon/{x.Value.KeyId}",
@@ -70,9 +70,10 @@ namespace WarpDeck.Presentation.Controllers
                 Tags = CreateTagResponseModels(x.Value.Tags),
                 Behavior = new BehaviorResponseModel
                 {
-                    Uri = $"/behavior/{x.Value.Behavior.Type}",
+                    Uri = $"/behavior/{x.Value.Behavior.BehaviorTypeName}",
                     BehaviorId = x.Value.Behavior.BehaviorId,
-                    Provider = x.Value.Behavior.Provider
+                    Provider = x.Value.Behavior.Provider,
+                    Actions =  x.Value.Behavior.Actions
                 }
             }).ToArray();
         }

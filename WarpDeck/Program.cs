@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Autofac;
+using Newtonsoft.Json;
 using OpenMacroBoard.SDK;
 using StreamDeckSharp;
 using WarpDeck.Adapter.Actions;
+using WarpDeck.Adapter.JsonConverters;
 using WarpDeck.Application.Rules;
+using WarpDeck.Application.Samples;
 using WarpDeck.Domain;
 using WarpDeck.Domain.Model;
 using WarpDeck.Domain.Model.Collections; //<-- Here it is
@@ -29,11 +34,39 @@ namespace WarpDeck
 
             using var streamdeck = StreamDeck.OpenDevice();
 
-          
-            builder.RegisterInstance(new DeviceManager().AddDevice(streamdeck, SetDevelopmentDevice())).AsSelf();
+
+            string readFileName = "testing.wpdevice.json";
+            string writeFileName = "testing.wpdevice2.json";
+            DeviceModel deviceModel;
+
+            if (File.Exists(readFileName))
+            {
+                string fileContents = File.ReadAllText(readFileName);
+                deviceModel = JsonConvert.DeserializeObject<DeviceModel>(fileContents, new JsonSerializerSettings()
+                {
+                    Converters = new List<JsonConverter>()
+                    {
+                        new TagJsonCoverter()
+                    }
+                });
+            }
+            else
+                deviceModel = SampleDeviceModel.SingleLayerSingleKey;
+
+
+            builder.RegisterInstance(new DeviceManager().AddDevice(streamdeck, deviceModel)).AsSelf();
             Container = builder.Build();
 
             SetDevelopmentRules();
+            // File.WriteAllText(writeFileName,
+            //     JsonConvert.SerializeObject(Container.Resolve<DeviceManager>().Devices.Values.First(),
+            //         Formatting.Indented, new JsonSerializerSettings()
+            //         {
+            //             Converters = new List<JsonConverter>()
+            //             {
+            //                 new TagJsonCoverter()
+            //             }
+            //         }));
             Presentation.Presentation.StartAsync(args);
             Container.Resolve<DeviceManager>().RefreshBoard("office-streamdeck");
 
@@ -47,49 +80,19 @@ namespace WarpDeck
                 TagRules.Always("text", ""),
                 TagRules.Always("text.top", "10"),
                 TagRules.Always("text.left", "10"),
-                TagRules.Always("svg.scale.width", ".5"),
-                TagRules.Always("svg.scale.height", ".5"),
-                TagRules.Always("svg.position.top", "40"),
-                TagRules.Always("svg.position.left", "36"),
-                TagRules.Always("svg.baseDirectory", "C:/Users/andrewm/Desktop/fa-pro-5.15.2/regular/"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Multimedia", "#370f69"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Window", "#0f3369"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Apps", "#FF33A8"));
-        }
-
-        private static DeviceModel SetDevelopmentDevice()
-        {
-            return new DeviceModel
-            {
-                DeviceId = "office-streamdeck",
-                Layers = new LayerMap(new[]
-                {
-                    new LayerModel
-                    {
-                        LayerId = "windows-media",
-                        Keys = new KeyMap(
-                            new Dictionary<int, KeyModel>
-                            {
-                                {
-                                    0, new KeyModel
-                                    {
-                                        KeyId = 0,
-                                        Behavior = new BehaviorModel
-                                        {
-                                            Type = "SinglePressBehavior", BehaviorId = "SinglePressBehavior",
-                                            Provider = "warpdeck",
-                                            Actions = new Dictionary<string, ActionModel>()
-                                            {
-                                                {"press", new ActionModel() {Type = nameof(WindowInputKeyAction)}}
-                                            }
-                                        },
-                                        Tags = new TagMap("key.category = Window", "svg.path = volume-down.svg")
-                                    }
-                                }
-                            })
-                    }
-                })
-            };
+                TagRules.Always("text.fontFamily", "Segoe UI"),
+                TagRules.Always("text.fontSize", "26"),
+                TagRules.Always("svg.fill.color", "#FFFFFF99"),
+                TagRules.Always("svg.scale.width", ".55"),
+                TagRules.Always("svg.scale.height", ".55"),
+                TagRules.Always("svg.position.top", "65"),
+                TagRules.Always("svg.position.left", "55"),
+                TagRules.Always("svg.baseDirectory", "C:/Users/andrewm/Desktop/fa/solid"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Multimedia", "#693c72"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Window", "#09015f"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Clipboard", "#d97642"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Apps", "#FF33A8"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Rider-VCS", "#216b44"));
         }
     }
 }

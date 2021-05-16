@@ -9,7 +9,7 @@ namespace WarpDeck.Adapter.Behaviors
         private readonly KeyState _startActionWhen = KeyState.Down;
 
 
-        public override void KeyStateChanged(BehaviorModel model, KeyState incomingKeyState)
+        public override void KeyStateChanged(BehaviorModel model, KeyHistoryModel keyHistory, KeyState incomingKeyState)
         {
             if (incomingKeyState == _startActionWhen)
                 FireEvent(model, "press");

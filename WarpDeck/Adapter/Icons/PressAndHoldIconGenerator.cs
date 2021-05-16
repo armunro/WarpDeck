@@ -1,6 +1,7 @@
 using WarpDeck.Application;
 using WarpDeck.Application.Rules;
 using WarpDeck.Domain;
+using WarpDeck.Domain.Helpers;
 using WarpDeck.Domain.Model;
 
 namespace WarpDeck.Adapter.Icons
@@ -13,7 +14,7 @@ namespace WarpDeck.Adapter.Icons
         protected override KeyIcon DrawIconElements(KeyModel keyModel, KeyIcon wipIcon)
         {
             return wipIcon
-                .Background(Helpers.GetColorFromHex(Rule.GetStyleValue("background.color", keyModel, "#000")))
+                .Background(IconHelpers.GetColorFromHex(Rule.GetStyleValue("background.color", keyModel, "#000")))
                 .Text(
                     Rule.GetStyleValue("behaviors.pressAndHold.pressAction.text", keyModel, keyModel.KeyId.ToString()),
                     int.Parse(Rule.GetStyleValue("behaviors.pressAndHold.pressAction.text.top", keyModel, "5")),

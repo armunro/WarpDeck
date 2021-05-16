@@ -1,18 +1,19 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using WarpDeck.Adapter.JsonConverters;
 
 namespace WarpDeck.Domain.Model
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-    
     public class TagModel
     {
      
-        public string Provider { get; private set; }
-        public string Name { get; private set; }
-        public string Value { get; private set; }
+        public string Provider { get;  set; }
+        public string Name { get;  set; }
+        public string Value { get;  set; }
         
         public static TagModel ParseTagString(string tagString)
         {
@@ -29,6 +30,11 @@ namespace WarpDeck.Domain.Model
             key = keyParts[1];
 
             return new TagModel {Provider = provider.Trim(), Name = key.Trim(), Value = value.Trim()};
+        }
+
+        public static string ToTagString(TagModel tagModel)
+        {
+            return $"{tagModel.Provider}:{tagModel.Name} = {tagModel.Value}";
         }
     }
 }

@@ -3,24 +3,29 @@ using System.Linq;
 
 namespace WarpDeck.Domain.Model.Collections
 {
-    public class LayerMap
+    public class LayerMap : Dictionary<string, LayerModel>
     {
-        public Dictionary<string, LayerModel> ItemLookup { get; }
+    
 
         public LayerMap(IEnumerable<LayerModel> layers)
         {
-            ItemLookup = layers.ToDictionary(x => x.LayerId, x => x);
+            foreach (LayerModel layerModel in layers) 
+                Add(layerModel.LayerId, layerModel);
         }
 
-
-        public List<LayerModel> GetAllLayers()
+        public LayerMap()
         {
-            return ItemLookup.Values.ToList();
+            
         }
+
+        
+
+
+        
 
         public LayerModel GetLayerById(string layerId)
         {
-            ItemLookup.TryGetValue(layerId, out var returnLayerOrNull);
+            TryGetValue(layerId, out var returnLayerOrNull);
             return returnLayerOrNull;
         }
     }

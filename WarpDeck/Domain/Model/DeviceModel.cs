@@ -9,6 +9,6 @@ namespace WarpDeck.Domain.Model
     public class DeviceModel
     {
         public string DeviceId { get; set; }
-        public LayerMap Layers { get; set; }
+        public LayerMap Layers { get; set; } = new LayerMap();
     }
 }

@@ -10,7 +10,7 @@ namespace WarpDeck.Domain.Model
     {
         public string Provider { get; set; }
         public string BehaviorId { get; set; }
-        public string Type { get; set; }
+        public string BehaviorTypeName { get; set; }
         public Dictionary<string,ActionModel> Actions { get; set; } = new Dictionary<string, ActionModel>();
 
     }

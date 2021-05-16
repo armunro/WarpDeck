@@ -15,7 +15,7 @@ namespace WarpDeck.Presentation
         // ReSharper disable once UnusedMember.Global
         public void OnGet()
         {
-            Layers = Program.Container.Resolve<DeviceManager>().Devices.Values.First().Layers.GetAllLayers();
+            Layers = Program.Container.Resolve<DeviceManager>().Devices.Values.First().Layers.Values.ToList();
         }
     }
 }

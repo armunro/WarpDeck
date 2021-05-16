@@ -2,32 +2,31 @@ using System.Collections.Generic;
 
 namespace WarpDeck.Domain.Model.Collections
 {
-    public class KeyMap
+    public class KeyMap: Dictionary<int, KeyModel>
     {
-        public Dictionary<int, KeyModel> Keys { get; }
+       
 
         public KeyMap()
         {
-            Keys =  new Dictionary<int,KeyModel>();
+           
         }
 
-        public KeyMap(Dictionary<int, KeyModel> keys)
+        public KeyMap(Dictionary<int, KeyModel> items)
         {
-            Keys = keys;
+            foreach (var keyValuePair in items)
+            {
+                this[keyValuePair.Key] = keyValuePair.Value;
+            }
         }
 
         public void UpdateKeyState(int keyId, KeyModel keyModel)
         {
-            Keys[keyId] = keyModel;
+            this[keyId] = keyModel;
         }
 
-        public KeyModel this[int key]
-        {
-            get => Keys[key];
-            set => Keys[key] = value;
-        }
+       
 
-        public bool IsKeyMapped(int keyId) => Keys.ContainsKey(keyId);
+        public bool IsKeyMapped(int keyId) => ContainsKey(keyId);
 
     }
 }

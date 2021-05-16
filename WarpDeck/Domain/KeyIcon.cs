@@ -1,5 +1,6 @@
 using System.Drawing;
 using Svg;
+using WarpDeck.Domain.Helpers;
 
 namespace WarpDeck.Domain
 {
@@ -29,7 +30,7 @@ namespace WarpDeck.Domain
         }
 
         public KeyIcon Svg(string svgFilePath, int top, int left, float scaleWidthToDoc = 1,
-            float scaleHeightToDoc = 1)
+            float scaleHeightToDoc = 1, string color = "#FFFFFF")
         {
             if (string.IsNullOrWhiteSpace(svgFilePath)) return this;
 
@@ -37,9 +38,10 @@ namespace WarpDeck.Domain
             float newHeight = _bitmap.Height * scaleHeightToDoc;
 
             SvgDocument svgDoc = SvgDocument.Open(svgFilePath);
-            svgDoc.Fill = new SvgColourServer(Color.White);
+            svgDoc.Fill = new SvgColourServer(IconHelpers.GetColorFromHex(color)) ;
             svgDoc.Y = top;
             svgDoc.X = left;
+            
             svgDoc.Draw(_graphics, new SizeF(newWidth, newHeight));
 
             return this;

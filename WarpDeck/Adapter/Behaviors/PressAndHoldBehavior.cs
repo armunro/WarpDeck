@@ -7,20 +7,15 @@ namespace WarpDeck.Adapter.Behaviors
 {
     public class PressAndHoldBehavior : KeyBehavior
     {
-        private readonly int _holdDelay;
-        private DateTime _lastDown = DateTime.MinValue;
+        private readonly int _holdDelay = 250;
 
-        public PressAndHoldBehavior(int holdDelay) 
-        {
-           _holdDelay = holdDelay;
-        }
 
-        public override void KeyStateChanged (BehaviorModel behaviorModel, KeyState incomingKeyState)
+        public override void KeyStateChanged(BehaviorModel behaviorModel, KeyHistoryModel keyHistory,
+            KeyState incomingKeyState)
         {
-            if (incomingKeyState == KeyState.Down)
-                _lastDown = DateTime.Now;
-            else
-                FireEvent(behaviorModel, _lastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "press" : "hold");
+            if (incomingKeyState == KeyState.Up)
+                FireEvent(behaviorModel,
+                    keyHistory.LastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "hold" : "press" );
         }
     }
 }

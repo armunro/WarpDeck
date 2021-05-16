@@ -18,13 +18,13 @@ namespace WarpDeck.Domain.Helpers
 
         
         
-        public  Color GetColorFromHex(string hex)
+        public  static Color GetColorFromHex(string hex)
         {
             FromHex(hex, out var a, out var r, out var g, out var b);
             return Color.FromArgb(a, r, g, b);
         }
 
-        private  void FromHex(string hex, out byte a, out byte r, out byte g, out byte b)
+        private  static void FromHex(string hex, out byte a, out byte r, out byte g, out byte b)
         {
             hex = ToRgbaHex(hex);
             if (hex == null || !uint.TryParse(hex, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var packedValue))

@@ -10,7 +10,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local
-
 namespace WarpDeck.Presentation
 {
     public class AspNetCoreStartup
@@ -22,8 +21,7 @@ namespace WarpDeck.Presentation
         {
             Configuration = configuration;
         }
-        
-        
+
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -33,12 +31,12 @@ namespace WarpDeck.Presentation
                     options => options.JsonSerializerOptions.IgnoreNullValues = true
                 );
         }
-        
+
         // Here's the change for child lifetime scope usage! Register your "root"
         // child lifetime scope things with the adapter.
+        // ReSharper disable once UnusedMember.Global
         public void ConfigureContainer(AutofacChildLifetimeScopeConfigurationAdapter config)
         {
-           
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

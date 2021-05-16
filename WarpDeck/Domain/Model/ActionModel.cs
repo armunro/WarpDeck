@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace WarpDeck.Domain.Model
@@ -7,6 +8,7 @@ namespace WarpDeck.Domain.Model
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public class ActionModel
     {
-        public string Type { get; set; }
+        public string ActionTypeName { get; set; }
+        public Dictionary<string, string> Parameters { get; set; } = new Dictionary<string, string>();
     }
 }

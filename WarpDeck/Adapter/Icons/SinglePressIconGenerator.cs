@@ -2,6 +2,7 @@ using System.IO;
 using WarpDeck.Application;
 using WarpDeck.Application.Rules;
 using WarpDeck.Domain;
+using WarpDeck.Domain.Helpers;
 using WarpDeck.Domain.Model;
 
 namespace WarpDeck.Adapter.Icons
@@ -26,22 +27,23 @@ namespace WarpDeck.Adapter.Icons
         protected override KeyIcon DrawIconElements(KeyModel key, KeyIcon wipIcon)
         {
             return wipIcon
-                .Background(Helpers.GetColorFromHex(Rule.GetStyleValue("background.color", key, "#000")))
+                .Background(IconHelpers.GetColorFromHex(Rule.GetStyleValue("background.color", key, "#000")))
                 .Border(
                     int.Parse(Rule.GetStyleValue("border.thickness", key, "0")),
-                    Helpers.GetColorFromHex(Rule.GetStyleValue("border.color", key, "#000")))
+                    IconHelpers.GetColorFromHex(Rule.GetStyleValue("border.color", key, "#000")))
                 .Svg(
                     CalculateSvgFilePath(key),
                     int.Parse(Rule.GetStyleValue("svg.position.top", key, "20")),
                     int.Parse(Rule.GetStyleValue("svg.position.left", key, "5")),
                     float.Parse(Rule.GetStyleValue("svg.scale.width", key, "1")),
-                    float.Parse(Rule.GetStyleValue("svg.scale.height", key, "1")))
+                    float.Parse(Rule.GetStyleValue("svg.scale.height", key, "1")),
+                    Rule.GetStyleValue("svg.fill.color", key, "#FFFFFF"))
                 .Text(
                     Rule.GetStyleValue("text", key, key.KeyId.ToString()),
                     int.Parse(Rule.GetStyleValue("text.top", key, "5")),
                     int.Parse(Rule.GetStyleValue("text.left", key, "5")),
                     Rule.GetStyleValue("text.fontFamily", key, "Arial"),
-                    float.Parse(Rule.GetStyleValue("text.fontSize", key, "14"))
+                    float.Parse(Rule.GetStyleValue("text.fontSize", key, "24"))
                 );
         }
     }
