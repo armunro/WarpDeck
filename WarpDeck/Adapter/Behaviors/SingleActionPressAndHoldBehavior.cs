@@ -4,7 +4,7 @@ using WarpDeck.Domain.Model;
 
 namespace WarpDeck.Adapter.Behaviors
 {
-    public class SinglePressBehavior : KeyBehavior
+    public class SingleActionPressAndHoldBehavior : KeyBehavior
     {
         private readonly KeyState _startActionWhen = KeyState.Down;
 

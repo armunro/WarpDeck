@@ -5,7 +5,7 @@ using WarpDeck.Domain.Model;
 
 namespace WarpDeck.Adapter.Behaviors
 {
-    public class PressAndHoldBehavior : KeyBehavior
+    public class DoubleActionPressAndHoldBehavior : KeyBehavior
     {
         private readonly int _holdDelay = 250;
 

@@ -35,6 +35,7 @@ namespace WarpDeck.Domain
 
         private void HandleBoardKeyStateChange(int keyId, bool isDown, string deviceId)
         {
+            Console.WriteLine($"Device[{deviceId}]:Key[{keyId}]:Down->{isDown}");
             if (!KeyStates[deviceId].IsKeyMapped(keyId)) return;
             if (!KeyHistory[deviceId].ContainsKey(keyId))
                 KeyHistory[deviceId][keyId] = new KeyHistoryModel();
@@ -72,8 +73,6 @@ namespace WarpDeck.Domain
         {
             if (keyModel == null)
                 return IconHelpers.DrawBlankKeyIcon(144, 144);
-
-
             KeyIcon newIcon = null;
 
             IconGenerator generator = Program.Container.ResolveNamed<IconGenerator>(

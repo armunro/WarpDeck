@@ -1,3 +1,4 @@
+using System.Drawing;
 using WarpDeck.Application.Rules;
 using WarpDeck.Domain;
 using WarpDeck.Domain.Helpers;
@@ -20,12 +21,11 @@ namespace WarpDeck.Application
             Rule = ruleManager;
         }
 
-        protected abstract KeyIcon DrawIconElements(KeyModel keyModel, KeyIcon wipIcon);
+        protected abstract Bitmap DrawIcon(KeyModel keyModel);
         
         public KeyIcon GenerateIcon(KeyModel keyModel)
         {
-            KeyIcon newIcon = new KeyIcon(IconWidth, IconHeight);
-            newIcon = DrawIconElements(keyModel, newIcon);
+            KeyIcon newIcon = new KeyIcon(DrawIcon(keyModel));
             return newIcon;
         }
     }

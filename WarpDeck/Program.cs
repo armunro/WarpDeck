@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Autofac;
 using Newtonsoft.Json;
-using OpenMacroBoard.SDK;
 using StreamDeckSharp;
-using WarpDeck.Adapter.Actions;
 using WarpDeck.Adapter.JsonConverters;
 using WarpDeck.Application.Rules;
 using WarpDeck.Application.Samples;
 using WarpDeck.Domain;
 using WarpDeck.Domain.Model;
-using WarpDeck.Domain.Model.Collections; //<-- Here it is
+
+//<-- Here it is
 
 
 namespace WarpDeck
@@ -58,19 +56,10 @@ namespace WarpDeck
             Container = builder.Build();
 
             SetDevelopmentRules();
-            // File.WriteAllText(writeFileName,
-            //     JsonConvert.SerializeObject(Container.Resolve<DeviceManager>().Devices.Values.First(),
-            //         Formatting.Indented, new JsonSerializerSettings()
-            //         {
-            //             Converters = new List<JsonConverter>()
-            //             {
-            //                 new TagJsonCoverter()
-            //             }
-            //         }));
             Presentation.Presentation.StartAsync(args);
             Container.Resolve<DeviceManager>().RefreshBoard("office-streamdeck");
 
-            Console.WriteLine("// --warp-deck- //");
+            Console.WriteLine("//--warp-deck--//");
             Console.ReadKey();
         }
 

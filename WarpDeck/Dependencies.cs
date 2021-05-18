@@ -16,8 +16,8 @@ namespace WarpDeck
         {
             protected override void Load(ContainerBuilder builder)
             {
-                builder.RegisterType<SinglePressBehavior>().Named<KeyBehavior>(nameof(SinglePressBehavior));
-                builder.RegisterType<PressAndHoldBehavior>().Named<KeyBehavior>(nameof(PressAndHoldBehavior));
+                builder.RegisterType<SingleActionPressAndHoldBehavior>().Named<KeyBehavior>(nameof(SingleActionPressAndHoldBehavior));
+                builder.RegisterType<DoubleActionPressAndHoldBehavior>().Named<KeyBehavior>(nameof(DoubleActionPressAndHoldBehavior));
                 base.Load(builder);
             }
         }
@@ -26,8 +26,8 @@ namespace WarpDeck
         {
             protected override void Load(ContainerBuilder builder)
             {
-                builder.RegisterType<SinglePressIconGenerator>().Named<IconGenerator>(nameof(SinglePressBehavior));
-                builder.RegisterType<PressAndHoldIconGenerator>().Named<IconGenerator>(nameof(PressAndHoldBehavior));
+                builder.RegisterType<SinglePressIconGenerator>().Named<IconGenerator>(nameof(SingleActionPressAndHoldBehavior));
+                builder.RegisterType<PressAndHoldIconGenerator>().Named<IconGenerator>(nameof(DoubleActionPressAndHoldBehavior));
                 base.Load(builder);
             }
         }

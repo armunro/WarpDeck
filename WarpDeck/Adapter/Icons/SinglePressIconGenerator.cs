@@ -1,7 +1,8 @@
+using System.Drawing;
 using System.IO;
+using Svg;
 using WarpDeck.Application;
 using WarpDeck.Application.Rules;
-using WarpDeck.Domain;
 using WarpDeck.Domain.Helpers;
 using WarpDeck.Domain.Model;
 
@@ -9,6 +10,9 @@ namespace WarpDeck.Adapter.Icons
 {
     public class SinglePressIconGenerator : IconGenerator
     {
+        private Bitmap _bitmap;
+        private Graphics _graphics;
+        
         public SinglePressIconGenerator(RuleManager ruleManager, int iconWidth = 244, int iconHeight = 244) : base(
             ruleManager, iconWidth, iconHeight)
         {
@@ -24,27 +28,22 @@ namespace WarpDeck.Adapter.Icons
                 : svgPath;
         }
 
-        protected override KeyIcon DrawIconElements(KeyModel key, KeyIcon wipIcon)
+        protected override Bitmap DrawIcon(KeyModel key)
         {
-            return wipIcon
-                .Background(IconHelpers.GetColorFromHex(Rule.GetStyleValue("background.color", key, "#000")))
-                .Border(
-                    int.Parse(Rule.GetStyleValue("border.thickness", key, "0")),
-                    IconHelpers.GetColorFromHex(Rule.GetStyleValue("border.color", key, "#000")))
-                .Svg(
-                    CalculateSvgFilePath(key),
-                    int.Parse(Rule.GetStyleValue("svg.position.top", key, "20")),
-                    int.Parse(Rule.GetStyleValue("svg.position.left", key, "5")),
-                    float.Parse(Rule.GetStyleValue("svg.scale.width", key, "1")),
-                    float.Parse(Rule.GetStyleValue("svg.scale.height", key, "1")),
-                    Rule.GetStyleValue("svg.fill.color", key, "#FFFFFF"))
-                .Text(
-                    Rule.GetStyleValue("text", key, key.KeyId.ToString()),
-                    int.Parse(Rule.GetStyleValue("text.top", key, "5")),
-                    int.Parse(Rule.GetStyleValue("text.left", key, "5")),
-                    Rule.GetStyleValue("text.fontFamily", key, "Arial"),
-                    float.Parse(Rule.GetStyleValue("text.fontSize", key, "24"))
-                );
+            _bitmap = new Bitmap(244, 244);
+            _graphics = Graphics.FromImage(_bitmap);
+            string templatePath = @"C:\users\andrewm\Desktop\Untitled.svg";
+         
+            float newWidth = _bitmap.Width ;
+            float newHeight = _bitmap.Height;
+
+            SvgDocument svgDoc = SvgDocument.Open(templatePath);
+            SvgElement iconElem = svgDoc.GetElementById("mainIcon");
+            iconElem.Fill = new SvgColourServer(IconHelpers.GetColorFromHex("#000"));
+            
+            svgDoc.Draw(_graphics, new SizeF(newWidth, newHeight));
+
+            return _bitmap;
         }
     }
 }

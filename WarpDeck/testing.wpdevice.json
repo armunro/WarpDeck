@@ -1,0 +1,330 @@
+{
+  "DeviceId": "office-streamdeck",
+  "Layers": {
+    "windows-media": {
+      "LayerId": "windows-media",
+      "Keys": {
+        "0": {
+          "KeyId": 0,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(volumedown)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Multimedia",
+              "text": "warpdeck:text = Vol Down",
+              "svg.path": "warpdeck:svg.path = volume-low.svg"
+            }
+          }
+        },
+        "1": {
+          "KeyId": 1,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(mediaplaypause)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Multimedia",
+              "text": "warpdeck:text = Play/Pause",
+              "svg.path": "warpdeck:svg.path = pause.svg"
+            }
+          }
+        },
+        "2": {
+          "KeyId": 2,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(volumeup)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Multimedia",
+              "text": "warpdeck:text = Vol Up",
+              "svg.path": "warpdeck:svg.path = volume-high.svg"
+            }
+          }
+        }
+      }
+    },
+    "windows-display": {
+      "LayerId": "windows-display",
+      "Keys": {
+        "3": {
+          "KeyId": 3,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(lwin+shift+right)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Window",
+              "text": "warpdeck:text = Win Left",
+              "svg.path": "warpdeck:svg.path = arrow-square-left.svg"
+            }
+          }
+        },
+        "4": {
+          "KeyId": 4,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(lwin+shift+left)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Window",
+              "text": "warpdeck:text = Win Right",
+              "svg.path": "warpdeck:svg.path = arrow-square-right.svg"
+            }
+          }
+        },
+        "11": {
+          "KeyId": 11,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "DoubleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "PressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "DoubleActionWindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(control+f4)"
+                }
+              },
+              "hold": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(alt+f4)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Window",
+              "text": "warpdeck:text = Win Right",
+              "svg.path": "warpdeck:svg.path = arrow-square-right.svg"
+            }
+          }
+        }
+      }
+    },
+    "windows-clipboard": {
+      "LayerId": "windows-clipboard",
+      "Keys": {
+        "5": {
+          "KeyId": 5,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(control+c)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Clipboard",
+              "text": "warpdeck:text = Copy",
+              "svg.path": "warpdeck:svg.path = copy.svg"
+            }
+          }
+        },
+        "6": {
+          "KeyId": 6,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(control+v)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Clipboard",
+              "text": "warpdeck:text = Paste",
+              "svg.path": "warpdeck:svg.path = paste.svg"
+            }
+          }
+        },
+        "7": {
+          "KeyId": 7,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(alt+lwin+z)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Clipboard",
+              "text": "warpdeck:text = Ditto",
+              "svg.path": "warpdeck:svg.path = quote-right.svg"
+            }
+          }
+        }
+      }
+    },
+    "rider-default": {
+      "LayerId": "rider-default",
+      "Keys": {
+        "8": {
+          "KeyId": 8,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(control+alt+w)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Rider-VCS",
+              "text": "warpdeck:text = GIT Pull",
+              "svg.path": "warpdeck:svg.path = cloud-download.svg"
+            }
+          }
+        },
+        "9": {
+          "KeyId": 9,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(control+shift+k)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Rider-VCS",
+              "text": "warpdeck:text = GIT Push",
+              "svg.path": "warpdeck:svg.path = cloud-upload.svg"
+            }
+          }
+        },
+        "10": {
+          "KeyId": 10,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "SingleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "SingleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(control+k)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Rider-VCS",
+              "text": "warpdeck:text = Commit",
+              "svg.path": "warpdeck:svg.path = code-commit.svg"
+            }
+          }
+        },
+        "16": {
+          "KeyId": 16,
+          "Behavior": {
+            "Provider": "warpdeck",
+            "BehaviorId": "DoubleActionPressAndHoldBehavior",
+            "BehaviorTypeName": "DoubleActionPressAndHoldBehavior",
+            "Actions": {
+              "press": {
+                "ActionTypeName": "WindowInputKeyAction",
+                "Parameters": {
+                  "keys": "(alt+d9)"
+                }
+              }
+            }
+          },
+          "Tags": {
+            "warpdeck": {
+              "key.category": "warpdeck:key.category = Rider-VCS",
+              "text": "warpdeck:text = GIT Log",
+              "svg.path": "warpdeck:svg.path = code-merge.svg"
+            }
+          }
+        }
+      }
+    }
+  }
+}
