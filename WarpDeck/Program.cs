@@ -20,7 +20,6 @@ namespace WarpDeck
     {
         public static IContainer Container;
 
-
         private static void Main(string[] args)
         {
             ContainerBuilder builder = new ContainerBuilder();
@@ -34,7 +33,6 @@ namespace WarpDeck
 
 
             string readFileName = "testing.wpdevice.json";
-            string writeFileName = "testing.wpdevice2.json";
             DeviceModel deviceModel;
 
             if (File.Exists(readFileName))
@@ -66,20 +64,11 @@ namespace WarpDeck
         private static void SetDevelopmentRules()
         {
             Container.Resolve<DeviceManager>().Rules.AddRules(
-                TagRules.Always("text", ""),
-                TagRules.Always("text.top", "10"),
-                TagRules.Always("text.left", "10"),
-                TagRules.Always("text.fontFamily", "Segoe UI"),
-                TagRules.Always("text.fontSize", "26"),
-                TagRules.Always("svg.fill.color", "#FFFFFF99"),
-                TagRules.Always("svg.scale.width", ".55"),
-                TagRules.Always("svg.scale.height", ".55"),
-                TagRules.Always("svg.position.top", "65"),
-                TagRules.Always("svg.position.left", "55"),
+                TagRules.Always("svg.fill.color", "#FFF"),
                 TagRules.Always("svg.baseDirectory", "C:/Users/andrewm/Desktop/fa/solid"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Multimedia", "#693c72"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Window", "#09015f"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Clipboard", "#d97642"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Multimedia", "#800080"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Window", "#ffae00"),
+                TagRules.WhenTagEquals("background.color", "key.category", "Clipboard", "#ed631a"),
                 TagRules.WhenTagEquals("background.color", "key.category", "Apps", "#FF33A8"),
                 TagRules.WhenTagEquals("background.color", "key.category", "Rider-VCS", "#216b44"));
         }

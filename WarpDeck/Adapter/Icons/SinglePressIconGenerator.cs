@@ -10,40 +10,36 @@ namespace WarpDeck.Adapter.Icons
 {
     public class SinglePressIconGenerator : IconGenerator
     {
-        private Bitmap _bitmap;
-        private Graphics _graphics;
+      
         
         public SinglePressIconGenerator(RuleManager ruleManager, int iconWidth = 244, int iconHeight = 244) : base(
             ruleManager, iconWidth, iconHeight)
         {
         }
 
-        private string CalculateSvgFilePath(KeyModel key)
-        {
-            string svgBaseDir = Rule.GetStyleValue("svg.baseDirectory", key, string.Empty);
-            string svgPath = Rule.GetStyleValue("svg.path", key, string.Empty);
 
-            return !string.IsNullOrWhiteSpace(svgBaseDir)
-                ? Path.Combine(svgBaseDir, svgPath)
-                : svgPath;
-        }
-
-        protected override Bitmap DrawIcon(KeyModel key)
+        protected override Bitmap DrawIcon(KeyModel keyModel)
         {
-            _bitmap = new Bitmap(244, 244);
-            _graphics = Graphics.FromImage(_bitmap);
-            string templatePath = @"C:\users\andrewm\Desktop\Untitled.svg";
+            Bitmap = new Bitmap(244, 244);
+            Graphics = Graphics.FromImage(Bitmap);
+            string templatePath = @"C:\Users\me\OneDrive\Desktop\Untitled.svg";
          
-            float newWidth = _bitmap.Width ;
-            float newHeight = _bitmap.Height;
+            float newWidth = Bitmap.Width ;
+            float newHeight = Bitmap.Height;
 
             SvgDocument svgDoc = SvgDocument.Open(templatePath);
-            SvgElement iconElem = svgDoc.GetElementById("mainIcon");
-            iconElem.Fill = new SvgColourServer(IconHelpers.GetColorFromHex("#000"));
+            svgDoc.GetElementById("BG").Fill =
+                new SvgColourServer(
+                    IconHelpers.GetColorFromHex(Rule.GetStyleValue("background.color", keyModel, "#000")));
+            svgDoc.GetElementById("GLYPH").Fill =
+                new SvgColourServer(
+                    IconHelpers.GetColorFromHex(Rule.GetStyleValue("svg.fill.color", keyModel, "#000")));
+          
             
-            svgDoc.Draw(_graphics, new SizeF(newWidth, newHeight));
+         
+            svgDoc.Draw(Graphics, new SizeF(newWidth, newHeight));
 
-            return _bitmap;
+            return Bitmap;
         }
     }
-}
+}   
