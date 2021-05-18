@@ -20,24 +20,17 @@ namespace WarpDeck.Adapter.Icons
 
         protected override Bitmap DrawIcon(KeyModel keyModel)
         {
-            Bitmap = new Bitmap(244, 244);
-            Graphics = Graphics.FromImage(Bitmap);
-            string templatePath = @"C:\Users\me\OneDrive\Desktop\Untitled.svg";
+            SvgDocument svgDoc = SvgDocument.Open( @"C:\Users\me\OneDrive\Desktop\Untitled.svg");
          
-            float newWidth = Bitmap.Width ;
-            float newHeight = Bitmap.Height;
-
-            SvgDocument svgDoc = SvgDocument.Open(templatePath);
             svgDoc.GetElementById("BG").Fill =
                 new SvgColourServer(
                     IconHelpers.GetColorFromHex(Rule.GetStyleValue("background.color", keyModel, "#000")));
             svgDoc.GetElementById("GLYPH").Fill =
                 new SvgColourServer(
                     IconHelpers.GetColorFromHex(Rule.GetStyleValue("svg.fill.color", keyModel, "#000")));
-          
             
          
-            svgDoc.Draw(Graphics, new SizeF(newWidth, newHeight));
+            svgDoc.Draw(Graphics, new SizeF(Bitmap.Width, Bitmap.Height));
 
             return Bitmap;
         }
