@@ -10,12 +10,12 @@ namespace WarpDeck.Application
     {
         protected int IconWidth { get; }
         protected int IconHeight { get; }
-        protected readonly IconHelpers Helpers;
-        protected RuleManager Rule { get; }
-        
         protected Bitmap Bitmap;
         protected Graphics Graphics;
 
+        protected readonly IconHelpers Helpers;
+        protected RuleManager Rule { get; }
+        
         protected IconGenerator(RuleManager ruleManager, int iconWidth = 244, int iconHeight = 244)
         {
             IconWidth = iconWidth;

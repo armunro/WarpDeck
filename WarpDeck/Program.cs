@@ -64,13 +64,13 @@ namespace WarpDeck
         private static void SetDevelopmentRules()
         {
             Container.Resolve<DeviceManager>().Rules.AddRules(
-                TagRules.Always("svg.fill.color", "#FFF"),
+                TagRules.Always("__micon_border", "#300"),
                 TagRules.Always("svg.baseDirectory", "C:/Users/andrewm/Desktop/fa/solid"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Multimedia", "#800080"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Window", "#ffae00"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Clipboard", "#ed631a"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Apps", "#FF33A8"),
-                TagRules.WhenTagEquals("background.color", "key.category", "Rider-VCS", "#216b44"));
+                TagRules.WhenTagEquals("__micon_background", "key.category", "Multimedia", "#800080"),
+                TagRules.WhenTagEquals("__micon_background", "key.category", "Window", "#ff0000"),
+                TagRules.WhenTagEquals("__micon_background", "key.category", "Clipboard", "#ed631a"),
+                TagRules.WhenTagEquals("__micon_background", "key.category", "Apps", "#FF33A8"),
+                TagRules.WhenTagEquals("__micon_background", "key.category", "Rider-VCS", "#216b44"));
         }
     }
 }

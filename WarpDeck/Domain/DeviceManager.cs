@@ -46,6 +46,7 @@ namespace WarpDeck.Domain
 
             string behaviorTypeName = KeyStates[deviceId][keyId].Behavior.BehaviorTypeName;
             KeyBehavior behavior = Program.Container.ResolveNamed<KeyBehavior>(behaviorTypeName);
+            
             behavior.KeyStateChanged(KeyStates[deviceId][keyId].Behavior,KeyHistory[deviceId][keyId], isDown ? KeyState.Down : KeyState.Up);
         }
 

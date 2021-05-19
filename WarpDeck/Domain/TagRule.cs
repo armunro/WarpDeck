@@ -20,7 +20,4 @@ namespace WarpDeck.Domain
         public abstract string CalculateValue(TagMap tags);
       
     }
-
- 
-    
 }

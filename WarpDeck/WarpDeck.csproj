@@ -41,7 +41,15 @@
       <Content Include="Presentation\wwwroot\**\*">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="Untitled.svg" />
+      <Content Include="Untitled.svg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
       
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="External\MSpec" />
     </ItemGroup>
 
     

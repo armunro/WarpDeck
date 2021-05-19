@@ -9,19 +9,16 @@ namespace WarpDeck.Adapter.Icons
 {
     public class PressAndHoldIconGenerator : IconGenerator
     {
-    
-
-
         protected override Bitmap DrawIcon(KeyModel keyModel)
         {
-            string templatePath = @"C:\users\me\Onedrive\Desktop\Untitled.svg";
-            
+            string templatePath = @"Untitled.svg";
+
             SvgDocument svgDoc = SvgDocument.Open(templatePath);
-            
-            svgDoc.GetElementById("BG").Fill =
+
+            svgDoc.GetElementById("__micon_background").Fill =
                 new SvgColourServer(
                     IconHelpers.GetColorFromHex(Rule.GetStyleValue("background.color", keyModel, "#000")));
-            svgDoc.GetElementById("GLYPH").Fill =
+            svgDoc.GetElementById("__micon_glyph").Fill =
                 new SvgColourServer(
                     IconHelpers.GetColorFromHex(Rule.GetStyleValue("svg.fill.color", keyModel, "#000")));
 

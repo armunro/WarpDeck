@@ -34,6 +34,11 @@ namespace WarpDeck.Application.Rules
             _rules[tagRule.StyleKey].AddRule(tagRule);
         }
 
+        public bool HasRule(string key)
+        {
+            return _rules.ContainsKey(key);
+        }
+        
         public void AddRules(params TagRule[] rules)
         {
             foreach (TagRule rule in rules) AddRule(rule);
